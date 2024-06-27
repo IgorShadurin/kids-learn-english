@@ -49,11 +49,64 @@
             return allPhrases;
         }
 
+        function countPlaceholderOptions(template) {
+            const placeholders = template.match(/{[^}]+}/g) || [];
+            return placeholders.map(placeholder => placeholder.replace(/[{}]/g, '').split('|').length);
+        }
+
+        function checkTemplates() {
+            const incorrectTemplates = [];
+
+            Object.keys(templates).forEach((templateKey) => {
+                const templateValues = templates[templateKey];
+
+                templateValues.forEach((templateValue) => {
+                    const englishOptions = countPlaceholderOptions(templateKey);
+                    const russianOptions = countPlaceholderOptions(templateValue);
+
+                    const englishPlaceholdersCount = englishOptions.length;
+                    const russianPlaceholdersCount = russianOptions.length;
+
+                    const englishOptionsCount = englishOptions.reduce((acc, count) => acc * count, 1);
+                    const russianOptionsCount = russianOptions.reduce((acc, count) => acc * count, 1);
+
+                    if (englishPlaceholdersCount !== russianPlaceholdersCount || englishOptionsCount !== russianOptionsCount) {
+                        incorrectTemplates.push({
+                            englishTemplate: templateKey,
+                            russianTemplate: templateValue,
+                            englishPlaceholdersCount,
+                            russianPlaceholdersCount,
+                            englishOptionsCount,
+                            russianOptionsCount
+                        });
+                    }
+                });
+            });
+
+            return incorrectTemplates;
+        }
+
         function runTests() {
+            const incorrectTemplates = checkTemplates();
+
+            if (incorrectTemplates.length > 0) {
+                console.log('Incorrect templates found:');
+                incorrectTemplates.forEach(({ englishTemplate, russianTemplate, englishPlaceholdersCount, russianPlaceholdersCount, englishOptionsCount, russianOptionsCount }) => {
+                    console.log(`English Template: ${englishTemplate}`);
+                    console.log(`Russian Template: ${russianTemplate}`);
+                    console.log(`Number of English Placeholders: ${englishPlaceholdersCount}`);
+                    console.log(`Number of Russian Placeholders: ${russianPlaceholdersCount}`);
+                    console.log(`Number of English Options: ${englishOptionsCount}`);
+                    console.log(`Number of Russian Options: ${russianOptionsCount}`);
+                });
+            } else {
+                console.log('All templates are correct.');
+            }
+
             const allPhrases = getAllPhrases();
+            console.log('Total phrases:', allPhrases.length);
             allPhrases.forEach(({ russianPhrase, englishPhrase }) => {
-                console.log(`Russian Phrase: ${russianPhrase}`);
-                console.log(`English Phrase: ${englishPhrase}`);
+                console.log(`Phrase: ${russianPhrase} ||| ${englishPhrase}`);
             });
         }
 

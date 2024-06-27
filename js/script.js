@@ -43,7 +43,7 @@ function setupSpeechRecognition() {
         recordButton.innerText = 'Record';
         const userAnswer = event.results[0][0].transcript;
         console.log('Recognized text:', userAnswer);
-        document.getElementById('recognized').innerText = userAnswer;
+        document.getElementById('recognized').innerText = `${userAnswer} => ${currentCheckPhrase}`;
         if (checkAnswer(userAnswer, currentCheckPhrase)) {
             correctCount++;
             updateScore();
