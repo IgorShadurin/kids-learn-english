@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test English Learning for Kids</title>
-    <script>
+    <script type="module">
+        import { generatePhrase } from './js/phraseGenerator.js';
+
         function runTests() {
-            console.assert(window.checkAnswer('hello') === true, 'Test 1 Failed');
-            console.assert(window.checkAnswer('Hello!') === true, 'Test 2 Failed');
-            console.assert(window.checkAnswer('thank you') === true, 'Test 3 Failed');
-            console.assert(window.checkAnswer('How are you') === true, 'Test 4 Failed');
-            console.assert(window.checkAnswer('Goodbye') === true, 'Test 5 Failed');
-            console.assert(window.checkAnswer('hi') === false, 'Test 6 Failed');
-            console.assert(window.checkAnswer('thanks') === false, 'Test 7 Failed');
-            console.assert(window.checkAnswer('How do you do') === false, 'Test 8 Failed');
-            console.assert(window.checkAnswer('Bye') === false, 'Test 9 Failed');
+            for (let i = 0; i < 20; i++) {
+                const { phrase, checkPhrase } = generatePhrase();
+                console.assert(phrase.includes("Мне нравится") || phrase.includes("Мне не нравится"), `Test ${i + 1} Failed: Incorrect phrase format`);
+                console.assert(checkPhrase === phrase.replace(/[^a-zA-Zа-яА-Я ]/g, '').toLowerCase().trim(), `Test ${i + 1} Failed: Check phrase does not match`);
+            }
             console.log('All tests passed!');
         }
 
-        window.onload = runTests;
+        window.onload = function() {
+            runTests();
+        }
     </script>
 </head>
 <body>
