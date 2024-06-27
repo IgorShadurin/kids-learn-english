@@ -1,33 +1,28 @@
-const nouns = [
-    "игрушка", "машина", "книга", "мультфильм", "каша", "собака",
-    "кошка", "шарик", "конфета", "сок", "мороженое", "яблоко",
-    "банан", "шоколад", "игра", "велосипед", "пазл", "фрукт",
-    "овощ", "поезд"
-];
-
-const translations = {
-    "i like": "мне нравится",
-    "i don't like": "мне не нравится",
-    "puzzle": "пазл",
-    "toy": "игрушка",
-    "car": "машина",
-    "book": "книга",
-    "cartoon": "мультфильм",
-    "porridge": "каша",
-    "dog": "собака",
-    "cat": "кошка",
-    "ball": "шарик",
-    "candy": "конфета",
-    "juice": "сок",
-    "ice cream": "мороженое",
-    "apple": "яблоко",
-    "banana": "банан",
-    "chocolate": "шоколад",
-    "game": "игра",
-    "bicycle": "велосипед",
-    "fruit": "фрукт",
-    "vegetable": "овощ",
-    "train": "поезд"
+const words = {
+    "игрушка": "toy",
+    "машина": "car",
+    "книга": "book",
+    "мультфильм": "cartoon",
+    "каша": "porridge",
+    "собака": "dog",
+    "кошка": "cat",
+    "шарик": "ball",
+    "конфета": "candy",
+    "сок": "juice",
+    "мороженое": "ice cream",
+    "яблоко": "apple",
+    "банан": "banana",
+    "шоколад": "chocolate",
+    "игра": "game",
+    "велосипед": "bicycle",
+    "пазл": "puzzle",
+    "фрукт": "fruit",
+    "овощи": "vegetable",
+    "поезд": "train"
 };
 
-export { nouns, translations };
+function getRandomElement(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+export { words, getRandomElement };

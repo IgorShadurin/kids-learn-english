@@ -1,15 +1,11 @@
-import { nouns, translations } from './words.js';
-
-function getRandomElement(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
+import { words, getRandomElement } from './words.js';
 
 function generatePhrase() {
     const likeDislike = getRandomElement(["нравится", "не нравится"]);
-    const noun = getRandomElement(nouns);
+    const noun = getRandomElement(Object.keys(words));
     const phrase = `мне ${likeDislike} ${noun}`;
     const phraseCapitalized = phrase.charAt(0).toUpperCase() + phrase.slice(1);
-    const englishNoun = Object.keys(translations).find(key => translations[key] === noun);
+    const englishNoun = words[noun];
     const checkPhrase = `i ${likeDislike === "нравится" ? "like" : "don't like"} ${englishNoun}`;
     return { phrase: phraseCapitalized, checkPhrase };
 }
