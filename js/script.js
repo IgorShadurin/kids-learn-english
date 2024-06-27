@@ -35,7 +35,7 @@ function setupSpeechRecognition() {
             recognition.stop();
             recordButton.classList.remove('recording');
             recordButton.innerText = 'Record';
-        }, 500);
+        }, 1000);
     };
 
     recognition.onresult = (event) => {
@@ -57,6 +57,7 @@ function generateNewPhrase() {
     const { phrase, checkPhrase } = generatePhrase();
     currentCheckPhrase = checkPhrase;
     document.getElementById('task').innerText = phrase;
+    document.getElementById('recognized').innerText = '...';
 }
 
 window.onload = function() {
