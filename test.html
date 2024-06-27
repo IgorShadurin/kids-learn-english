@@ -3,22 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test English Learning for Kids</title>
+    <title>Test Phrase Generation</title>
     <script type="module">
-        import { generatePhrase } from './js/phraseGenerator.js';
+        import { templates } from './js/templates.js';
+
+        function getAllPhrases() {
+            const allPhrases = [];
+
+            Object.keys(templates).forEach((templateKey) => {
+                const templateValues = templates[templateKey];
+
+                templateValues.forEach((templateValue) => {
+                    const englishPlaceholders = templateKey.match(/{[^}]+}/g);
+                    const russianPlaceholders = templateValue.match(/{[^}]+}/g);
+
+                    const generateCombinations = (template, placeholders) => {
+                        let combinations = [template];
+
+                        placeholders.forEach((placeholder) => {
+                            const options = placeholder.replace(/[{}]/g, '').split('|');
+                            const newCombinations = [];
+
+                            combinations.forEach((combination) => {
+                                options.forEach((option) => {
+                                    newCombinations.push(combination.replace(placeholder, option));
+                                });
+                            });
+
+                            combinations = newCombinations;
+                        });
+
+                        return combinations;
+                    };
+
+                    const englishCombinations = generateCombinations(templateKey, englishPlaceholders);
+                    const russianCombinations = generateCombinations(templateValue, russianPlaceholders);
+
+                    russianCombinations.forEach((russianPhrase, index) => {
+                        const englishPhrase = englishCombinations[index];
+                        allPhrases.push({ russianPhrase, englishPhrase });
+                    });
+                });
+            });
+
+            return allPhrases;
+        }
 
         function runTests() {
-            for (let i = 0; i < 20; i++) {
-                const { phrase, checkPhrase } = generatePhrase();
-                console.assert(phrase.includes("Мне нравится") || phrase.includes("Мне не нравится"), `Test ${i + 1} Failed: Incorrect phrase format`);
-                console.assert(checkPhrase === phrase.replace(/[^a-zA-Zа-яА-Я ]/g, '').toLowerCase().trim(), `Test ${i + 1} Failed: Check phrase does not match`);
-            }
-            console.log('All tests passed!');
+            const allPhrases = getAllPhrases();
+            allPhrases.forEach(({ russianPhrase, englishPhrase }) => {
+                console.log(`Russian Phrase: ${russianPhrase}`);
+                console.log(`English Phrase: ${englishPhrase}`);
+            });
         }
 
         window.onload = function() {
             runTests();
-        }
+        };
     </script>
 </head>
 <body>

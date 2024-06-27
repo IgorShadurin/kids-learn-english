@@ -17,12 +17,23 @@ const words = {
     "велосипед": "bicycle",
     "пазл": "puzzle",
     "фрукт": "fruit",
-    "овощи": "vegetable",
-    "поезд": "train"
+    "овощи": "vegetables",
+    "поезд": "train",
+    "учитель": "teacher",
+    "друг": "friend",
+    "класс": "class",
+    "урок": "lesson",
+    "школа": "school"
 };
+
+const pronouns = ["i", "you", "he", "she", "it", "we", "they"];
+const actions = [
+    "like", "don't like", "want", "don't want", "understand", "don't understand",
+    "play with", "talk to", "listen to", "watch"
+];
 
 function getRandomElement(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export { words, getRandomElement };
+export { words, pronouns, actions, getRandomElement };

@@ -1,4 +1,4 @@
-import { generatePhrase, checkAnswer } from './phraseGenerator.js';
+import {generatePhrase, checkAnswer} from './phraseGenerator.js';
 
 let correctCount = 0;
 let currentCheckPhrase = '';
@@ -30,15 +30,17 @@ function setupSpeechRecognition() {
         recordButton.innerText = 'Recording...';
     };
 
-    recordButton.onmouseup = recordButton.ontouchend = () => {
-        setTimeout(() => {
-            recognition.stop();
-            recordButton.classList.remove('recording');
-            recordButton.innerText = 'Record';
-        }, 1000);
-    };
+    // recordButton.onmouseup = recordButton.ontouchend = () => {
+    //     setTimeout(() => {
+    //         recognition.stop();
+    //         recordButton.classList.remove('recording');
+    //         recordButton.innerText = 'Record';
+    //     }, 1000);
+    // };
 
     recognition.onresult = (event) => {
+        recordButton.classList.remove('recording');
+        recordButton.innerText = 'Record';
         const userAnswer = event.results[0][0].transcript;
         console.log('Recognized text:', userAnswer);
         document.getElementById('recognized').innerText = userAnswer;
@@ -54,13 +56,13 @@ function setupSpeechRecognition() {
 }
 
 function generateNewPhrase() {
-    const { phrase, checkPhrase } = generatePhrase();
-    currentCheckPhrase = checkPhrase;
-    document.getElementById('task').innerText = phrase;
+    const {russianPhrase, englishPhrase} = generatePhrase();
+    currentCheckPhrase = englishPhrase;
+    document.getElementById('task').innerText = russianPhrase;
     document.getElementById('recognized').innerText = '...';
 }
 
-window.onload = function() {
+window.onload = function () {
     generateNewPhrase();
     setupSpeechRecognition();
 };
